@@ -2,28 +2,31 @@
 
 ![Soneme Mimic Icon](https://github.com/userexec/soneme-mimic/blob/master/soneme-mimic-icon.png?raw=true)
 
-Soneme Mimic is a small, keypad-friendly Android barcode and QR-code wallet built for the Sonim XP3Plus XP3900.
+Soneme Mimic is a small, keypad-friendly Android card wallet built for the Sonim XP3Plus XP3900.
 
-It can scan supported barcodes and QR codes with the phone camera, save them into a simple library, and reproduce them on the screen later. It is useful for things such as gym cards, library cards, loyalty cards, tickets, Wi-Fi QR codes, and other situations where carrying the physical card or printed code is inconvenient.
+It can scan supported barcodes and QR codes, save and reproduce them on-screen, store photos of the cards they belong to, and keep plain-text card information that has no machine-readable code at all. It is useful for things such as gym cards, library cards, loyalty cards, tickets, insurance cards, membership numbers, Wi-Fi QR codes, and other situations where carrying the original physical card is inconvenient.
 
 The interface is designed around the XP3900's D-pad and three Sonim softkeys. There are no touch controls.
 
-Mimic does not try to preserve a photographed barcode pixel-for-pixel. It reads the logical data and barcode type, stores that information, and generates a clean new code when you display it.
+For barcode and QR items, Mimic does not preserve a photographed code pixel-for-pixel. It reads the logical data and barcode type, stores that information, and generates a clean new code when you display it. Photos are optional attachments to the saved item and are kept separately from the generated code.
 
-**Note: The XP3900's camera hardware is not really up to the task of scanning small barcodes in many cases. You may need to look up what kind of code it is and manually enter it. This is generally not an issue at all with QR codes, but small keytag 1D codes can be a real challenge. Guessing Code 128 or Codabar usually works out, but you may be doing some comparison.**
+**Note: The XP3900's camera hardware can struggle with small physical barcodes. Scan view starts at approximately 2x zoom, and D-pad Up/Down can change zoom to help the camera focus from a more useful distance, but some small or poorly printed 1D codes may still need to be entered manually. QR codes are generally much less troublesome.**
 
 ![List interface](https://github.com/userexec/soneme-mimic/blob/master/screenshot-list.png?raw=true)  ![New interface](https://github.com/userexec/soneme-mimic/blob/master/screenshot-new.png?raw=true)  ![Generate interface, QR](https://github.com/userexec/soneme-mimic/blob/master/screenshot-generate-qr.png?raw=true)  ![Generate interface, codabar](https://github.com/userexec/soneme-mimic/blob/master/screenshot-generate-codabar.png?raw=true)  ![Code interface, 128](https://github.com/userexec/soneme-mimic/blob/master/screenshot-128.png?raw=true)  ![Photo interface](https://github.com/userexec/soneme-mimic/blob/master/screenshot-photo.png?raw=true)  ![Code interface, codabar](https://github.com/userexec/soneme-mimic/blob/master/screenshot-codabar.png?raw=true)  ![Code interface, QR](https://github.com/userexec/soneme-mimic/blob/master/screenshot-qr.png?raw=true)  ![Code interface, plain text](https://github.com/userexec/soneme-mimic/blob/master/screenshot-plaintext.png?raw=true)
 
 ## Features
 
 * Scan supported 1D barcodes and 2D codes with the phone camera
-* Save codes into Wallet or Temporary collections
+* Adjustable scan zoom for difficult small barcodes
+* Save items into Wallet or Temporary collections
 * Manually create codes when scanning is not practical
-* Edit, rename, move, reorder, and delete saved codes
+* Store plain-text headings and values for cards with no barcode
+* Attach one or more photos to any saved item
+* Capture photos directly inside Mimic with torch and adjustable zoom
+* Edit, rename, move, reorder, and delete saved items
 * Display codes at maximum screen brightness
 * Automatic display rotation when another orientation gives a more usable barcode
-* Manual Rotate and Invert controls
-* Persistent per-code rotation and inversion
+* Manual code rotation with persistent per-code rotation
 * Square or rectangular scan reticle
 * Camera torch control
 * Human-friendly QR editing for common QR payload types
@@ -50,6 +53,8 @@ Soneme Mimic supports:
 
 Support is intentionally limited to code types that the ZXing library can both read and reproduce.
 
+Mimic also supports **Plain text and headings** as a non-barcode item type.
+
 ## Tested Devices
 
 Soneme Mimic has been developed and tested on:
@@ -74,7 +79,7 @@ If updating an existing release signed with the same release key:
 
 Android may require permission to install apps from unknown sources when installing directly on the phone.
 
-The first time Scan is used, Android will also request camera permission.
+The first time a camera feature is used, Android will also request camera permission.
 
 ## Wallet and Temporary
 
@@ -82,28 +87,28 @@ The main screen contains two tabs:
 
 ### Wallet
 
-Wallet is intended for codes you expect to keep around: gym cards, library cards, loyalty cards, recurring tickets, and similar things.
+Wallet is intended for items you expect to keep around: gym cards, library cards, insurance cards, loyalty cards, recurring tickets, and similar things.
 
 ### Temporary
 
-Temporary is simply a second organizational bucket for codes you do not necessarily want mixed into the main Wallet list.
+Temporary is simply a second organizational bucket for items you do not necessarily want mixed into the main Wallet list.
 
-Temporary codes do **not** expire automatically. They remain there until you delete them or move them to Wallet.
+Temporary items do **not** expire automatically. They remain there until you delete them or move them to Wallet.
 
-Use Left and Right on the D-pad to move between the two tabs. Use Up and Down to move through the saved codes. Press the D-pad center button to display the focused code.
+Use Left and Right on the D-pad to move between the two tabs. Use Up and Down to move through the saved items. Press the D-pad center button to display the focused item.
 
 Saved names must be unique across both collections.
 
-## Adding a Code
+## Adding an Item
 
 Choose **New** from either Wallet or Temporary.
 
 The menu offers:
 
-* **Scan** — use the camera to read an existing code
-* **Generate** — enter the code manually
+* **Scan** — use the camera to read an existing barcode or QR code
+* **Generate** — create an item manually
 
-The current tab determines the initial collection for the new code, but this can be changed before saving.
+The current tab determines the initial collection for the new item, but this can be changed before saving.
 
 ## Scanning
 
@@ -111,36 +116,79 @@ Choose **New**, then **Scan**.
 
 Aim the camera so the code is inside the on-screen reticle. Mimic waits for repeated consistent reads rather than accepting the first plausible camera frame, which helps prevent blurry or incomplete barcodes from being mistaken for something else.
 
-A successful scan gives a short vibration and opens the Generate screen with the detected format and data filled in. Give the code a unique name, make any desired changes, then save it.
+Scan starts at approximately **2x zoom** because the XP3900 camera often focuses more reliably when it can be held farther from a small barcode.
 
-The Scan softkeys include:
+While scanning:
 
-* **Torch** — toggles the camera light
-* **Reticle** — switches between square and rectangular targeting areas
+* **D-pad Up/Down** — zoom in or out
+* **Torch** — toggle the camera light
+* **Reticle** — switch between square and rectangular targeting areas
+* **Back** — cancel scanning and return
 
 The square reticle is the default and works well for QR and other 2D codes. The rectangular reticle can be useful when isolating a 1D barcode from a crowded page or card.
+
+Changing zoom also restarts the scanner's confirmation process so a result is not assembled from frames taken at different zoom levels.
+
+A successful scan gives a short vibration and opens Generate with the detected format and data filled in. Give the item a unique name, add any photos you want, make any desired changes, then save it.
 
 ### Camera limitations
 
 The XP3900 camera is the limiting factor in some scanning situations.
 
-Its camera can have difficulty resolving small, dense, or poorly printed 1D barcodes sharply enough for reliable decoding. This is particularly noticeable when the physical barcode is small enough that the camera must be held very close, where focus, noise, glare, and shadows become a problem.
+Its camera can have difficulty resolving small, dense, or poorly printed 1D barcodes sharply enough for reliable decoding. Zoom helps substantially because it allows the phone to be held farther from the code, where focus is often better and the phone is less likely to cast a shadow over the card.
 
 If Mimic reliably scans a larger reproduction of a barcode but cannot read the small original, there may simply not be enough useful image detail coming from the camera. No amount of software enthusiasm can reconstruct bars the sensor never resolved.
 
 In that case, use **Generate** and enter the printed value manually. Mimic can still reproduce the barcode cleanly even when the phone camera cannot scan the original.
 
-## Generating a Code Manually
+## Creating an Item Manually
 
 Choose **New**, then **Generate**.
 
-Every code has:
+Every item has:
 
 * **Name** — the friendly name shown in Wallet or Temporary
 * **Collection** — Wallet or Temporary
-* **Code type** — the barcode or 2D-code format
+* **Format** — Plain text and headings, or one of the supported barcode/2D-code types
+* **Photos** — optional photos attached to the item
 
-The remaining fields depend on the selected type.
+A new manually generated item defaults to **Plain text and headings**.
+
+The Generate softkeys are:
+
+* **Scan** — replace or fill code data by scanning
+* **Cancel** — return without saving
+* **Save** — save the item when all required fields are valid
+
+Back also returns without saving, but Cancel is useful when focus is currently inside a text field.
+
+### Plain text and headings
+
+Plain text is intended for cards that have useful information but no barcode at all, such as many insurance or membership cards.
+
+A new Plain text item begins with:
+
+* Heading 1
+* Text 1
+
+Use **Add field** to append additional heading/text pairs.
+
+For example:
+
+    MEMBER ID
+    1234567890
+
+    GROUP NUMBER
+    876543
+
+    RX BIN
+    012345
+
+When displayed, headings appear in smaller text and their values appear beneath them in larger bold text. Use Up and Down to scroll if the item contains more information than fits on one screen.
+
+Plain-text items do not have a Rotate control because there is no barcode image to rotate.
+
+### Barcodes and 2D codes
 
 For ordinary 1D barcodes such as Code 128, EAN, UPC, ITF, or Codabar, enter the value to encode.
 
@@ -163,13 +211,46 @@ For example, a Phone QR asks for the phone number rather than requiring you to m
 
 **Raw** is available when you need direct control of the QR payload or when Mimic scans a QR code whose convention it does not recognize.
 
-The Generate softkeys are:
+If you switch between Plain text and a barcode format after entering incompatible content, Mimic warns before discarding that content.
 
-* **Scan** — replace or fill the code data by scanning
-* **Cancel** — return without saving
-* **Save** — save the code when all required fields are valid
+## Photos
 
-Back also returns without saving, but Cancel is useful when focus is currently inside a text field.
+Any item can have photos attached to it, whether it contains a barcode, QR code, or plain text.
+
+In Generate/Edit, the Photos section shows small thumbnails followed by a **+** tile. Select **+** to capture another photo. Selecting an existing thumbnail opens it for viewing.
+
+There is no arbitrary photo-count limit; practical limits are the available storage on the device. Mimic loads small thumbnail versions in the editor and only one full photo at a time in the viewer.
+
+### Capturing a photo
+
+Photo capture is deliberately simple and is meant for things such as the front and back of an ID or insurance card.
+
+It starts at approximately **2x zoom**, which works better with the XP3900 camera when photographing card-sized subjects.
+
+Controls are:
+
+* **D-pad center** or **Capture** — take the photo
+* **D-pad Up/Down** — zoom in or out
+* **Torch** — toggle the camera light
+* **Cancel** or Back — return without taking a photo
+
+New photos are not committed to the saved item until you choose Save in Generate/Edit.
+
+### Viewing photos
+
+From a displayed item, **Photos** appears in the center softkey position only when that item actually has photos.
+
+The viewer displays one photo at a time without panning or zoom controls.
+
+With multiple photos:
+
+* **D-pad Left/Right** — previous or next photo
+* **Previous/Next** softkeys — previous or next photo
+* **Back** — return to the item's Code or Plain Text view
+
+If there is only one photo, Previous and Next are omitted.
+
+When a photo is opened from Generate/Edit, the center softkey becomes **Delete**. Deleting an existing photo while editing is staged just like other edits: it is not permanently removed unless the item is saved. Cancel discards added/deleted-photo changes along with the rest of the edit.
 
 ## A Note About Library-Card Codabar
 
@@ -191,9 +272,9 @@ If a known Codabar library card will not scan and you are recreating it manually
 
 The printed bars themselves may also look a little uneven on old or inexpensive library-card printers. Slightly different apparent narrow-bar widths do not necessarily mean the barcode is a different symbology.
 
-## Displaying a Saved Code
+## Displaying a Saved Barcode or QR Code
 
-Select a saved code from Wallet or Temporary.
+Select a saved code item from Wallet or Temporary.
 
 Mimic switches to a dedicated Code view and:
 
@@ -208,46 +289,64 @@ This can leave apparently unused white space around some barcodes. That is inten
 
 The Code softkeys are:
 
-* **Edit** — edit the saved code
-* **Invert** — switch between black-on-white and white-on-black
+* **Edit** — edit the saved item
+* **Photos** — view attached photos, when photos exist
 * **Rotate** — rotate the code 90 degrees
 
-Rotation and inversion are remembered separately for each saved code.
+If there are no photos attached to the item, the Photos softkey is omitted rather than displaying a dead option.
+
+Rotation is remembered separately for each saved code.
 
 The display brightness is restored when Code view is closed.
 
-## Editing Codes
+## Displaying Plain Text
 
-From Code view, choose **Edit**.
+Plain-text items use a dedicated text view instead of Code view.
 
-You can change the name, collection, code type, and content.
+Each heading is shown in smaller text followed by its value in larger bold text. Up and Down scroll through longer items.
 
-Choosing **Scan** while editing allows the existing saved item to be replaced with a newly scanned code without having to delete and recreate the entry.
+The available softkeys are:
 
-If a code is moved between Wallet and Temporary, it is placed at the end of the destination list.
+* **Edit** — edit the item
+* **Photos** — view attached photos, when photos exist
+* third position blank
 
-Saving an edited code resets its display rotation and inversion so the regenerated code can choose a fresh default presentation.
+As with Code view, Photos is omitted if the item has no photos.
 
-Cancel or Back returns without saving changes.
+## Editing Items
+
+From Code or Plain Text view, choose **Edit**.
+
+You can change the name, collection, format, content, text fields, and attached photos.
+
+Choosing **Scan** while editing allows an existing item to be updated from a newly scanned code without deleting and recreating it.
+
+If an item is moved between Wallet and Temporary, it is placed at the end of the destination list.
+
+Saving an edited barcode resets its display rotation so the regenerated code can choose a fresh default presentation.
+
+Newly captured photos and pending photo deletions are staged while editing. **Cancel or Back discards all unsaved changes**, including photo additions and deletions.
 
 ## Reordering and Deleting
 
 From a Wallet or Temporary list:
 
-* **Move up** moves the focused code one position earlier in that collection.
-* **Delete** asks for confirmation before permanently removing the focused code.
+* **Move up** moves the focused item one position earlier in that collection.
+* **Delete** asks for confirmation before permanently removing the focused item and its associated data.
 
 Moving an item affects only its order within that collection.
 
 ## What Mimic Stores
 
-Mimic stores the decoded payload and code format, not a photograph of the original barcode.
+For barcode and QR items, Mimic stores the decoded payload and code format rather than a photograph of the original barcode.
 
 When a scanned code is displayed later, Mimic generates a new clean representation of the same logical code.
 
 For recognized QR conventions, Mimic can show friendly editing fields. If a scanned QR code is saved without changing those semantic fields, the original decoded payload is retained rather than unnecessarily rebuilding it.
 
-This makes Mimic a code wallet, not an image wallet.
+Plain-text items store their ordered heading/value pairs.
+
+Photos are stored separately as attachments to the item. They do not affect the generated barcode data.
 
 ## Storage and Privacy
 
@@ -263,11 +362,11 @@ It does not require:
 * a subscription,
 * cloud storage.
 
-Saved codes and application settings remain on the device.
+Saved items, text fields, photos, and application settings remain on the device. Attached photos are stored in Mimic's private application storage rather than being added to the phone's normal photo gallery, and application backup is disabled.
 
-Camera access is used only for scanning codes.
+Camera access is used only for scanning codes and capturing attached photos.
 
-As with any barcode wallet, a displayed barcode should be treated with the same care as the physical card or ticket it represents. Anyone who can copy a usable barcode may be able to use whatever system accepts that barcode.
+Cards, photos, membership numbers, and displayed barcodes can contain sensitive information. Treat the phone with the same care you would the physical cards it replaces.
 
 ## Building
 
