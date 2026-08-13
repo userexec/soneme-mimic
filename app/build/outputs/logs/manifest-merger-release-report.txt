@@ -48,7 +48,7 @@ INJECTED from /home/administrator/code/soneme-mimic/app/src/main/AndroidManifest
 	android:icon
 		ADDED from /home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:11:9-43
 	android:allowBackup
-		ADDED from /home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:10:9-35
+		ADDED from /home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:10:9-36
 	android:theme
 		ADDED from /home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:13:9-49
 activity#com.userexec.soneme.mimic.MainActivity

@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.userexec.soneme.mimic"
-4    android:versionCode="1"
-5    android:versionName="0.1.0" >
+4    android:versionCode="2"
+5    android:versionName="1.1.0" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="30"
@@ -36,8 +36,8 @@
 23
 24    <application
 24-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:9:5-24:19
-25        android:allowBackup="true"
-25-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:10:9-35
+25        android:allowBackup="false"
+25-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:10:9-36
 26        android:debuggable="true"
 27        android:extractNativeLibs="false"
 28        android:icon="@mipmap/ic_launcher"

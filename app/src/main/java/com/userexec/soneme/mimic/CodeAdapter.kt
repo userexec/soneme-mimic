@@ -43,7 +43,7 @@ class CodeAdapter(private val context: Context) : BaseAdapter() {
             text = item.name
             isSelected = parent is android.widget.ListView && parent.selectedItemPosition == position
         }
-        row.findViewById<TextView>(android.R.id.text2).text = Formats.label(item.format)
+        row.findViewById<TextView>(android.R.id.text2).text = Formats.displayLabel(item)
         return row
     }
 

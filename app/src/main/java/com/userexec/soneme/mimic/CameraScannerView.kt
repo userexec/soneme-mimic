@@ -134,6 +134,43 @@ class CameraScannerView(
         }.getOrDefault(torch)
     }
 
+    fun adjustZoom(direction: Int): Int? {
+        if (direction == 0) return currentZoomRatio()
+        val c = camera ?: return null
+        val p = runCatching { c.parameters }.getOrNull() ?: return null
+        if (!p.isZoomSupported) return null
+        val ratios = runCatching { p.zoomRatios }.getOrNull().orEmpty()
+        if (ratios.isEmpty()) return null
+
+        val maxIndex = minOf(p.maxZoom, ratios.lastIndex)
+        val currentIndex = p.zoom.coerceIn(0, maxIndex)
+        val currentRatio = ratios[currentIndex]
+        val targetRatio = currentRatio + if (direction > 0) ZOOM_STEP_RATIO else -ZOOM_STEP_RATIO
+        val candidatesForDirection = ratios.indices.filter { index ->
+            index <= maxIndex && if (direction > 0) ratios[index] > currentRatio else ratios[index] < currentRatio
+        }
+        val nextIndex = candidatesForDirection.minByOrNull { abs(ratios[it] - targetRatio) } ?: currentIndex
+        if (nextIndex != currentIndex) {
+            p.zoom = nextIndex
+            if (!runCatching { c.parameters = p }.isSuccess) return currentRatio
+            candidates.clear()
+            if (autofocusCapable) {
+                focusMovingUntil = SystemClock.elapsedRealtime() + FOCUS_MOVE_GUARD_MS
+                main.removeCallbacks(focusRunnable)
+                main.postDelayed(focusRunnable, ZOOM_FOCUS_DELAY_MS)
+            }
+        }
+        return ratios[nextIndex]
+    }
+
+    private fun currentZoomRatio(): Int? {
+        val p = runCatching { camera?.parameters }.getOrNull() ?: return null
+        if (!p.isZoomSupported) return null
+        val ratios = runCatching { p.zoomRatios }.getOrNull().orEmpty()
+        if (ratios.isEmpty()) return null
+        return ratios[p.zoom.coerceIn(0, minOf(p.maxZoom, ratios.lastIndex))]
+    }
+
     fun toggleReticle(): Boolean {
         reticle.square = !reticle.square
         candidates.clear()
@@ -197,7 +234,7 @@ class CameraScannerView(
         if (p.isZoomSupported) {
             val ratios = runCatching { p.zoomRatios }.getOrNull().orEmpty()
             if (ratios.isNotEmpty()) {
-                val targetRatio = 200 // Camera zoom ratios are expressed as 100 == 1.0x.
+                val targetRatio = DEFAULT_ZOOM_RATIO
                 val bestIndex = ratios.indices.minByOrNull { abs(ratios[it] - targetRatio) } ?: 0
                 p.zoom = bestIndex.coerceIn(0, p.maxZoom)
             }
@@ -423,6 +460,9 @@ class CameraScannerView(
     }
 
     companion object {
+        private const val DEFAULT_ZOOM_RATIO = 200 // Camera API uses 100 == 1.0x.
+        private const val ZOOM_STEP_RATIO = 25     // About 0.25x per D-pad press.
+        private const val ZOOM_FOCUS_DELAY_MS = 80L
         private const val INITIAL_FOCUS_DELAY_MS = 120L
         private const val INITIAL_SCAN_DELAY_MS = 500L
         private const val FOCUS_INTERVAL_MS = 1600L
