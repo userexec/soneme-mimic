@@ -1,0 +1,7 @@
+com.userexec.soneme.mimic.app-pngs-0 /home/administrator/code/soneme-mimic/app/build/generated/res/pngs/release
+com.userexec.soneme.mimic.app-resValues-1 /home/administrator/code/soneme-mimic/app/build/generated/res/resValues/release
+com.userexec.soneme.mimic.app-packageReleaseResources-2 /home/administrator/code/soneme-mimic/app/build/intermediates/incremental/release/packageReleaseResources/merged.dir
+com.userexec.soneme.mimic.app-packageReleaseResources-3 /home/administrator/code/soneme-mimic/app/build/intermediates/incremental/release/packageReleaseResources/stripped.dir
+com.userexec.soneme.mimic.app-release-4 /home/administrator/code/soneme-mimic/app/build/intermediates/merged_res/release/mergeReleaseResources
+com.userexec.soneme.mimic.app-main-5 /home/administrator/code/soneme-mimic/app/src/main/res
+com.userexec.soneme.mimic.app-release-6 /home/administrator/code/soneme-mimic/app/src/release/res

@@ -1,238 +1,288 @@
 # Soneme Mimic
 
-Barcode and QR code scanner, library, and creator that allows you to scan barcodes and QR codes into a library and then reproduce them on-screen as needed. Useful for reproducing gym and library ID cards, loyalty cards, shareable wifi codes, or tickets without carrying the physical media bearing the code.
+![Soneme Mimic Icon](https://github.com/userexec/soneme-mimic/blob/master/soneme-mimic-icon.png?raw=true)
 
-# Supported code types
+Soneme Mimic is a small, keypad-friendly Android barcode and QR-code wallet built for the Sonim XP3Plus XP3900.
 
- - QR Code
- - UPC-A
- - UPC-E
- - EAN-8
- - EAN-13
- - Code 39
- - Code 93
- - Code 128
- - ITF
- - Codabar
- - PDF417
- - Data Matrix
- - Aztec
+It can scan supported barcodes and QR codes with the phone camera, save them into a simple library, and reproduce them on the screen later. It is useful for things such as gym cards, library cards, loyalty cards, tickets, Wi-Fi QR codes, and other situations where carrying the physical card or printed code is inconvenient.
 
-Support is limited to what the ZXing library can both scan and reproduce.
+The interface is designed around the XP3900's D-pad and three Sonim softkeys. There are no touch controls.
 
-# Target device properties
+Mimic does not try to preserve a photographed barcode pixel-for-pixel. It reads the logical data and barcode type, stores that information, and generates a clean new code when you display it.
 
-The Sonim XP3900 has the following constraints:
+**Note: The XP3900's camera hardware is not really up to the task of scanning small barcodes in many cases. You may need to look up what kind of code it is and manually enter it. This is generally not an issue at all with QR codes, but small keytag 1D codes can be a real challenge. Guessing Code 128 or Codabar usually works out, but you may be doing some comparison.**
 
-- 240x320
-- Android 11 Go
-- No touchscreen
-- Options menu softkeys
-- No Google Play Store or services
-- App must be sideloaded as an .apk
+![List interface](https://github.com/userexec/soneme-mimic/blob/master/screenshot-list.png?raw=true)  ![New interface](https://github.com/userexec/soneme-mimic/blob/master/screenshot-new.png?raw=true)  ![Generate interface, QR](https://github.com/userexec/soneme-mimic/blob/master/screenshot-generate-qr.png?raw=true)  ![Generate interface, codabar](https://github.com/userexec/soneme-mimic/blob/master/screenshot-generate-codabar.png?raw=true)  ![Code interface, 128](https://github.com/userexec/soneme-mimic/blob/master/screenshot-128.png?raw=true)  ![Code interface, codabar](https://github.com/userexec/soneme-mimic/blob/master/screenshot-codabar.png?raw=true)  ![Code interface, QR](https://github.com/userexec/soneme-mimic/blob/master/screenshot-qr.png?raw=true)
 
-# Application overview
+## Features
 
-Soneme Mimic has a tabbed interface with two tabs: Wallet, Temporary
+* Scan supported 1D barcodes and 2D codes with the phone camera
+* Save codes into Wallet or Temporary collections
+* Manually create codes when scanning is not practical
+* Edit, rename, move, reorder, and delete saved codes
+* Display codes at maximum screen brightness
+* Automatic display rotation when another orientation gives a more usable barcode
+* Manual Rotate and Invert controls
+* Persistent per-code rotation and inversion
+* Square or rectangular scan reticle
+* Camera torch control
+* Human-friendly QR editing for common QR payload types
+* Sonim softkey integration
+* No accounts, analytics, advertising, subscriptions, or cloud services
 
-Both tabs are identical in format, but divide the codes into two separate lists for easier management. For ease of reference these will be called List view, but just keep in mind there are two list views and their only difference is whether the items displayed are tagged as Wallet items or Temporary items.
+## Supported Code Types
 
-The app will be based around ZXing Core 3.5.4 and the old android.hardware.Camera.
+Soneme Mimic supports:
 
-Barcode names must be unique, but are identified to the system by a uid. Name uniqueness applies across all saved codes, whether they're tagged for wallet or temporary tab. Name uniqueness is case-insensitive.
+* QR Code
+* UPC-A
+* UPC-E
+* EAN-8
+* EAN-13
+* Code 39
+* Code 93
+* Code 128
+* ITF
+* Codabar
+* PDF417
+* Data Matrix
+* Aztec
 
-Soneme Mimic reproduces the decoded logical content and symbology, not the exact original arrangement of modules/bars. Codes are decoded, stored, and then re-encoded for clean display. The logical payload is the goal, not an exact recreation of the original scanned code.
+Support is intentionally limited to code types that the ZXing library can both read and reproduce.
 
-Individual codes when stored have the following fields:
-uid
-name
-collection
-format
-convention
-payload
-sortOrder
-displayRotation
-displayInverted
+## Tested Devices
 
-Disambiguation of "format" and "convention": "Format" is the type of code (e.g. UPC-A or QR). "Convention" is the semantic convention being used in the code if applicable (e.g. QR vCard, telephone, Wi-Fi, etc.). Convention is only used for QR format, and is null for other formats.
+Soneme Mimic has been developed and tested on:
 
-The application UI is portrait-only. Rotation settings rotate only the rendered code within Code view.
+* Sonim XP3Plus XP3900 — Android 11 Go
 
-App starts up in Wallet tab.
+The interface is specifically designed for the XP3900's 240x320 non-touch display and native three-position Sonim softkey bar.
 
-# Views
+Other Android devices are not a target. A normal touchscreen phone probably will not have the Sonim softkeys the interface expects, and parts of the application may be impractical or inaccessible without them.
 
-## List
+## Installing
 
-### Controls
+Soneme Mimic is distributed as a normal Android APK.
 
- - Left and right buttons switch tabs
- - Up and down cycle through the list
- - Clicking opens Code view for the item
- - If Temporary tab, back button returns to Wallet tab. If Wallet tab, back button returns to launcher
+Copy the APK to the device and install it, or install it from a connected computer with ADB:
 
-### Main content
+    adb install soneme-mimic.apk
 
-Listing of codes tagged with this tab
+If updating an existing release signed with the same release key:
 
-Each list item consists of:
- - Code name (marquee if out of room)
- - Code type
+    adb install -r soneme-mimic.apk
 
-"Temporary" is merely a bucket. Items in Temporary tab do not expire automatically or behave differently from items in Wallet tab. They remain until explicitly deleted or moved to Wallet. It's merely an organizational helper.
+Android may require permission to install apps from unknown sources when installing directly on the phone.
 
-### Options menu
+The first time Scan is used, Android will also request camera permission.
 
- - Delete
+## Wallet and Temporary
 
-   Blank menu slot if list is empty. Opens a menu with "Delete (name)?", options Delete and Cancel. Delete deletes the item. Cancel returns to the list.
-   
- - Move up
+The main screen contains two tabs:
 
-   Blank menu slot if focused item is the first in its list. Reorders the Code in the list up one spot.
+### Wallet
 
- - New
+Wallet is intended for codes you expect to keep around: gym cards, library cards, loyalty cards, recurring tickets, and similar things.
 
-   Opens a menu with the options Scan and Generate, Scan selected by default.
-   If Scan is chosen, switch to Scan view. If Generate is chosen, switch to Generate view.
+### Temporary
 
+Temporary is simply a second organizational bucket for codes you do not necessarily want mixed into the main Wallet list.
 
-## Scan
+Temporary codes do **not** expire automatically. They remain there until you delete them or move them to Wallet.
 
-### Controls
+Use Left and Right on the D-pad to move between the two tabs. Use Up and Down to move through the saved codes. Press the D-pad center button to display the focused code.
 
- - Back button returns to list on last active tab
+Saved names must be unique across both collections.
 
-### Main content
+## Adding a Code
 
-Full-screen camera view with functional alignment reticle. Only send the camera region inside the reticle to ZXing.
+Choose **New** from either Wallet or Temporary.
 
-On first run get runtime CAMERA permission. If denied, return to the originating List with a simple explanation.
+The menu offers:
 
-Camera continuously autofocuses when supported. If continuous autofocus is unavailable, periodically request autofocus while scanning.
+* **Scan** — use the camera to read an existing code
+* **Generate** — enter the code manually
 
-On detection of a supported code, gives one short confirmation vibration and switches to Generate view with fields populated. If Scan view was activated from wallet tab, the collection selector is set to Wallet. If activated from temporary tab, selector is set to Temporary.
+The current tab determines the initial collection for the new code, but this can be changed before saving.
 
-Release the camera whenever Scan loses the foreground, return to originating list.
+## Scanning
 
-### Options menu
+Choose **New**, then **Scan**.
 
- - (blank)
+Aim the camera so the code is inside the on-screen reticle. Mimic waits for repeated consistent reads rather than accepting the first plausible camera frame, which helps prevent blurry or incomplete barcodes from being mistaken for something else.
 
- - Torch
+A successful scan gives a short vibration and opens the Generate screen with the detected format and data filled in. Give the code a unique name, make any desired changes, then save it.
 
-   Activates the torch (deactivated automatically when Scan finishes or is canceled)
+The Scan softkeys include:
 
- - Reticle
+* **Torch** — toggles the camera light
+* **Reticle** — switches between square and rectangular targeting areas
 
-   Toggles between a square and rectangular reticle
+The square reticle is the default and works well for QR and other 2D codes. The rectangular reticle can be useful when isolating a 1D barcode from a crowded page or card.
 
+### Camera limitations
 
-## Generate
+The XP3900 camera is the limiting factor in some scanning situations.
 
-### Controls
+Its camera can have difficulty resolving small, dense, or poorly printed 1D barcodes sharply enough for reliable decoding. This is particularly noticeable when the physical barcode is small enough that the camera must be held very close, where focus, noise, glare, and shadows become a problem.
 
- - D-pad navigates fields
- - Back button returns to last active tab without saving
+If Mimic reliably scans a larger reproduction of a barcode but cannot read the small original, there may simply not be enough useful image detail coming from the camera. No amount of software enthusiasm can reconstruct bars the sensor never resolved.
 
-### Main content
+In that case, use **Generate** and enter the printed value manually. Mimic can still reproduce the barcode cleanly even when the phone camera cannot scan the original.
 
-Form controls governing creation of supported code types. May be prefilled by Scan view.
+## Generating a Code Manually
 
-Fields always displayed:
-Name - text
-Collection - select (Wallet, Temporary)
-Code type - list of supported code types
+Choose **New**, then **Generate**.
 
-Subsequent fields displayed are determined based on code type requirements.
+Every code has:
 
-For:
- - UPC-A
- - UPC-E
- - EAN-8
- - EAN-13
- - Code 39
- - Code 93
- - Code 128
- - ITF
- - Codabar
-Value field with validation appropriate to that symbology.
+* **Name** — the friendly name shown in Wallet or Temporary
+* **Collection** — Wallet or Temporary
+* **Code type** — the barcode or 2D-code format
 
-For:
- - Aztec
- - Data Matrix
- - PDF417
-Content field with validation appropriate to that symbology.
+The remaining fields depend on the selected type.
 
-For:
- - QR
-Content type selector with following types:
- - Text
- - URL
- - Wi-Fi
- - Contact
- - Email
- - Phone
- - SMS
- - Location
- - Calendar
- - Raw
-Human-friendly editing fields based on payload type
+For ordinary 1D barcodes such as Code 128, EAN, UPC, ITF, or Codabar, enter the value to encode.
 
-QR codes are stored with a type and payload string, though for editing purposes the payload string is decoded based on the type and broken out into separate human-friendly editing boxes for the fields of the semantic payload (e.g. "tel:" links ask for a telephone number and do not require the user to type "tel:"). These fields are not stored individually. On save, if they have been edited, they are merely converted to the payload string, and that's what is stored. If a payload string already exists (e.g. from scanning) it is broken out into these fields, but unless the user edits one or more they are not converted into a new payload string and the original is simply retained.
+Aztec, Data Matrix, and PDF417 accept general content.
 
-On save displayRotation and displayInverted are reset. Editing an existing code therefore resets its rotation and inversion.
+QR codes provide a content-type selector with human-friendly fields for:
 
-If a code item already existed in Wallet or Temporary and it is moved to the other collection, it is placed at the end of that collection's order.
+* Text
+* URL
+* Wi-Fi
+* Contact
+* Email
+* Phone
+* SMS
+* Location
+* Calendar
+* Raw
 
-### Options menu
+For example, a Phone QR asks for the phone number rather than requiring you to manually type a `tel:` URI. Wi-Fi, contact, email, and other structured QR types are handled similarly.
 
- - Scan
+**Raw** is available when you need direct control of the QR payload or when Mimic scans a QR code whose convention it does not recognize.
 
-   Switches to Scan view with values of name and collection passed for pre-fill when it next calls Generate view. Meant for use if initial scan fails or multiple were present and the wrong one was captured, or if editing an existing code to update the type and/or payload.
+The Generate softkeys are:
 
- - (blank)
+* **Scan** — replace or fill the code data by scanning
+* **Cancel** — return without saving
+* **Save** — save the code when all required fields are valid
 
- - Save
+Back also returns without saving, but Cancel is useful when focus is currently inside a text field.
 
-   Saves this code to the library. Save appears only when Name is non-empty and unique and all fields required by the selected code type contain values that can legally be encoded. On save, go to tab of the list's collection and focus the newly-saved item.
+## A Note About Library-Card Codabar
 
+Codabar has historically been common on library cards.
 
-## Code
+One potentially confusing detail is that the number printed below a library barcode may omit the Codabar start and stop characters even though those characters are part of the encoded data.
 
-### Controls
+A common library-card Codabar convention uses `A` on both sides.
 
- - Back button returns to last active tab
+For example, if the card visibly prints:
 
-### Main content
+    23629001321735
 
-Draws BitMatrix of code for scanning.
+the actual Codabar payload may be:
 
-Save the current Activity brightness before displaying the code. Set brightness to maximum while the Code view is active. Restore the previous brightness whenever Code view is exited, paused, or destroyed.
+    A23629001321735A
 
-Set screen brightness to maximum
-Prevent the display from sleeping
-Use pure #000000 and #FFFFFF
-Maximize integer module size
-Preserve a generous quiet zone
+If a known Codabar library card will not scan and you are recreating it manually, include the `A` guards when they are part of the original barcode.
 
-Some codes should be rotated 90 degrees clockwise by default to take advantage of additional vertical screen space as the screen has a 3:4 aspect ratio and bias for the right-handed tendency to swing the flip phone outward from the body when facing the screen toward a scanner horizontally. Encode the symbol and choose whichever of 0° or 90° gives the largest integer module scale inside the available display rectangle and quiet zone. If rotation wins, choose 90° clockwise as the default rotation.
+The printed bars themselves may also look a little uneven on old or inexpensive library-card printers. Slightly different apparent narrow-bar widths do not necessarily mean the barcode is a different symbology.
 
-All codes should display in black and white by default.
+## Displaying a Saved Code
 
-Changing a code's rotation or inversion is remembered, though not expressed as an editable field in Generate. Subsequent viewing of the code should render it in its last state of rotation and inversion.
+Select a saved code from Wallet or Temporary.
 
+Mimic switches to a dedicated Code view and:
 
-### Options menu
+* raises the display to maximum brightness,
+* prevents the screen from sleeping,
+* renders the code in pure black and white,
+* preserves barcode geometry and quiet space rather than stretching a code merely to fill the display.
 
- - Edit
+For long 1D barcodes, Mimic may rotate the code automatically so the available 240x320 display gives it the largest practical whole-pixel module size.
 
-   Opens pre-filled Generate view for this uid allowing renaming and editing
+This can leave apparently unused white space around some barcodes. That is intentional. Barcode bars and spaces are discrete geometry, and a smaller mathematically correct barcode is more useful than a larger distorted one.
 
- - Invert
+The Code softkeys are:
 
-   Toggles render between black on white (default) and white on black for the rare scanner set up for inverse symbols. Last invert state is remembered per code.
+* **Edit** — edit the saved code
+* **Invert** — switch between black-on-white and white-on-black
+* **Rotate** — rotate the code 90 degrees
 
- - Rotate
+Rotation and inversion are remembered separately for each saved code.
 
-   Rotates the code 90 degrees counter-clockwise (repeatable). Last rotation state is remembered per code.
+The display brightness is restored when Code view is closed.
+
+## Editing Codes
+
+From Code view, choose **Edit**.
+
+You can change the name, collection, code type, and content.
+
+Choosing **Scan** while editing allows the existing saved item to be replaced with a newly scanned code without having to delete and recreate the entry.
+
+If a code is moved between Wallet and Temporary, it is placed at the end of the destination list.
+
+Saving an edited code resets its display rotation and inversion so the regenerated code can choose a fresh default presentation.
+
+Cancel or Back returns without saving changes.
+
+## Reordering and Deleting
+
+From a Wallet or Temporary list:
+
+* **Move up** moves the focused code one position earlier in that collection.
+* **Delete** asks for confirmation before permanently removing the focused code.
+
+Moving an item affects only its order within that collection.
+
+## What Mimic Stores
+
+Mimic stores the decoded payload and code format, not a photograph of the original barcode.
+
+When a scanned code is displayed later, Mimic generates a new clean representation of the same logical code.
+
+For recognized QR conventions, Mimic can show friendly editing fields. If a scanned QR code is saved without changing those semantic fields, the original decoded payload is retained rather than unnecessarily rebuilding it.
+
+This makes Mimic a code wallet, not an image wallet.
+
+## Storage and Privacy
+
+Soneme Mimic is intentionally local.
+
+It does not require:
+
+* an account,
+* internet access,
+* Google Play Services,
+* analytics,
+* advertising,
+* a subscription,
+* cloud storage.
+
+Saved codes and application settings remain on the device.
+
+Camera access is used only for scanning codes.
+
+As with any barcode wallet, a displayed barcode should be treated with the same care as the physical card or ticket it represents. Anyone who can copy a usable barcode may be able to use whatever system accepts that barcode.
+
+## Building
+
+Soneme Mimic is a standard Gradle Android project.
+
+A debug build can be produced with:
+
+    ./gradlew assembleDebug
+
+A configured release build can be produced with:
+
+    ./gradlew assembleRelease
+
+The resulting APK is written beneath:
+
+    app/build/outputs/apk/
+
+Release builds must be signed with an Android signing key before installation. Future updates must use the same signing identity as the installed release.

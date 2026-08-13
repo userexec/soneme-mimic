@@ -1,0 +1,9 @@
+com.userexec.soneme.mimic:drawable/ic_launcher_foreground = 0x7f020004
+com.userexec.soneme.mimic:mipmap/ic_launcher = 0x7f030000
+com.userexec.soneme.mimic:drawable/$ic_launcher_foreground__2 = 0x7f020002
+com.userexec.soneme.mimic:style/Theme.SonemeMimic = 0x7f050000
+com.userexec.soneme.mimic:string/app_name = 0x7f040000
+com.userexec.soneme.mimic:drawable/$ic_launcher_foreground__3 = 0x7f020003
+com.userexec.soneme.mimic:drawable/$ic_launcher_foreground__0 = 0x7f020000
+com.userexec.soneme.mimic:drawable/$ic_launcher_foreground__1 = 0x7f020001
+com.userexec.soneme.mimic:color/ic_launcher_background = 0x7f010000

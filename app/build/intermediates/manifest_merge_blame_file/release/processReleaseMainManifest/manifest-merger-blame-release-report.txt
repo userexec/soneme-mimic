@@ -1,0 +1,71 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.userexec.soneme.mimic"
+4    android:versionCode="1"
+5    android:versionName="0.1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="30"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.CAMERA" />
+11-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:3:5-65
+11-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:3:22-62
+12    <uses-permission android:name="android.permission.VIBRATE" />
+12-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:4:5-66
+12-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:4:22-63
+13
+14    <uses-feature
+14-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:5:5-84
+15        android:name="android.hardware.camera"
+15-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:5:19-57
+16        android:required="true" />
+16-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:5:58-81
+17    <uses-feature
+17-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:6:5-95
+18        android:name="android.hardware.camera.autofocus"
+18-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:6:19-67
+19        android:required="false" />
+19-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:6:68-92
+20    <uses-feature
+20-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:7:5-91
+21        android:name="android.hardware.camera.flash"
+21-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:7:19-63
+22        android:required="false" />
+22-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:7:64-88
+23
+24    <application
+24-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:9:5-24:19
+25        android:allowBackup="true"
+25-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:10:9-35
+26        android:extractNativeLibs="false"
+27        android:icon="@mipmap/ic_launcher"
+27-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:11:9-43
+28        android:label="@string/app_name"
+28-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:12:9-41
+29        android:theme="@style/Theme.SonemeMimic" >
+29-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:13:9-49
+30        <activity
+30-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:14:9-23:20
+31            android:name="com.userexec.soneme.mimic.MainActivity"
+31-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:15:13-41
+32            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+32-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:16:13-83
+33            android:exported="true"
+33-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:17:13-36
+34            android:screenOrientation="portrait" >
+34-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:18:13-49
+35            <intent-filter>
+35-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:19:13-22:29
+36                <action android:name="android.intent.action.MAIN" />
+36-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:20:17-69
+36-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:20:25-66
+37
+38                <category android:name="android.intent.category.LAUNCHER" />
+38-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:21:17-77
+38-->/home/administrator/code/soneme-mimic/app/src/main/AndroidManifest.xml:21:27-74
+39            </intent-filter>
+40        </activity>
+41    </application>
+42
+43</manifest>

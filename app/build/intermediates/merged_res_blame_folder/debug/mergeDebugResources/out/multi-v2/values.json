@@ -1,0 +1,62 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.userexec.soneme.mimic.app-mergeDebugResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "/home/administrator/code/soneme-mimic/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "49",
+                        "endOffsets": "61"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "112",
+                        "endColumns": "49",
+                        "endOffsets": "157"
+                    }
+                },
+                {
+                    "source": "/home/administrator/code/soneme-mimic/app/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "56",
+                        "endOffsets": "68"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "56",
+                        "endOffsets": "107"
+                    }
+                },
+                {
+                    "source": "/home/administrator/code/soneme-mimic/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endLines": "8",
+                        "endColumns": "12",
+                        "endOffsets": "475"
+                    },
+                    "to": {
+                        "startLines": "4",
+                        "startColumns": "4",
+                        "startOffsets": "162",
+                        "endLines": "11",
+                        "endColumns": "12",
+                        "endOffsets": "621"
+                    }
+                }
+            ]
+        }
+    ]
+}
